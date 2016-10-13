@@ -2,6 +2,8 @@
 AI for security.
 
 
+## How to run
+
 Start tensorflow serving:
 ```
 docker run -d --name=inception -p 9000:9000 scrtai/inception /bin/bash -c "/serving/bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server --port=9000 --model_name=inception --model_base_path=/serving/inception-export &> inception_log"
