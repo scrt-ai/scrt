@@ -1,8 +1,11 @@
+/**
+ * HTTP API for TensorFlow Serving server.
+ */
 
 const http = require('http');
 const Busboy = require('busboy');
+const predictionClient = require('tensorflow-serving-node-client')('192.168.99.100:9000');
 const debug = require('debug')('scrt');
-const predictionClient = require('../serving/client')('192.168.99.100:9000');
 
 const handleError = (err, res) => {
   res.statusCode = 500;
@@ -11,7 +14,29 @@ const handleError = (err, res) => {
 
 const server = http.createServer((req, res) => {
 
-  if (req.method !== 'POST') {
+  if (req.method === 'GET') {
+    // showing form
+    var html = `
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <title>SCRT</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      </head>
+      <body>
+        <form action="/" method="post" enctype="multipart/form-data">
+          <label for="image">Select image for classification</label>
+          <input id="image" name="image" type="file" accept="image/jpeg" />
+          <button type="submit">Upload</button>
+        </form>
+      </body>
+    </html>
+    `;
+
+    res.setHeader('Content-Type', 'text/html');
+    return res.end(html);
+  } else if (req.method !== 'POST') {
     res.statusCode = 404;
     return res.end();
   }
