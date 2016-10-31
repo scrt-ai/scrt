@@ -2,9 +2,15 @@
  * HTTP API for TensorFlow Serving server.
  */
 
+// env
+if (!process.env.TENSORFLOW_SERVING_CONNECTION) {
+  console.log('TENSORFLOW_SERVING_CONNECTION environment variable required.');
+  process.exit(1);
+}
+
 const http = require('http');
 const Busboy = require('busboy');
-const predictionClient = require('tensorflow-serving-node-client')('192.168.99.100:9000');
+const predictionClient = require('tensorflow-serving-node-client')(process.env.TENSORFLOW_SERVING_CONNECTION);
 const debug = require('debug')('scrt');
 
 const handleError = (err, res) => {
