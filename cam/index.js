@@ -34,7 +34,7 @@ function processImage(path) {
         if (err) return handleError(err);
 
         debug('Image classification results:', results);
-        console.log(`I see ${results[0]}`)
+        console.log(`I see: ${results[0][0]}`)
       });
 
     });
