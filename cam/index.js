@@ -19,10 +19,10 @@ function handleError(err) {
   console.error(err);
 }
 
-function processImage(path) {
+function processImage(path, fn) {
   // reading file
   fs.readFile(path, (err, data) => {
-    if (err) return handleError(err);
+    if (err) return fn(err);
 
     debug(`Classifying image of size ${data.length}`);
 
@@ -31,10 +31,10 @@ function processImage(path) {
 
       // classifying image
       predictionClient.predict(data, (err, results) => {
-        if (err) return handleError(err);
+        if (err) return fn(err);
 
         debug('Image classification results:', results);
-        console.log(`I see: ${results[0][0]}`)
+        fn(null, results[0][0]);
       });
 
     });
@@ -43,7 +43,7 @@ function processImage(path) {
 }
 
 function main() {
-  debug(`Watching directory ${WATCH_PATH}`);
+  console.log('Hi, show me something to the camera...');
 
   const watcher = chokidar.watch(WATCH_PATH, {
     ignored: /[\/\\]\./,
@@ -58,10 +58,14 @@ function main() {
 
     debug(`New JPEG file: ${path}`);
 
-    // processing image after 1 sec
+    // processing image after some delay
     setTimeout(function () {
-      processImage(path);
-    }, 1000);
+      processImage(path, (err, res) => {
+        if (err) return handleError(err);
+
+        console.log(`I see: ${res}`);
+      });
+    }, 500);
 
   });
 }
