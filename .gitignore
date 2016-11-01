@@ -38,3 +38,6 @@ jspm_packages
 
 # OSX artifacts
 .DS_Store
+
+# captured images
+cam/capture
