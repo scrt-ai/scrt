@@ -39,6 +39,8 @@ function main() {
     fs.readFile(path, (err, data) => {
       if (err) return handleError(err);
 
+      debug(`Classifying image of size ${data.length}`);
+
       // deleting file
       fs.unlink(path, () => {
 
