@@ -19,6 +19,29 @@ function handleError(err) {
   console.error(err);
 }
 
+function processImage(path) {
+  // reading file
+  fs.readFile(path, (err, data) => {
+    if (err) return handleError(err);
+
+    debug(`Classifying image of size ${data.length}`);
+
+    // deleting file
+    fs.unlink(path, () => {
+
+      // classifying image
+      predictionClient.predict(data, (err, results) => {
+        if (err) return handleError(err);
+
+        debug('Image classification results:', results);
+        console.log(`I see ${results[0]}`)
+      });
+
+    });
+
+  });
+}
+
 function main() {
   debug(`Watching directory ${WATCH_PATH}`);
 
@@ -35,26 +58,11 @@ function main() {
 
     debug(`New JPEG file: ${path}`);
 
-    // reading file
-    fs.readFile(path, (err, data) => {
-      if (err) return handleError(err);
+    // processing image after 1 sec
+    setTimeout(function () {
+      processImage(path);
+    }, 1000);
 
-      debug(`Classifying image of size ${data.length}`);
-
-      // deleting file
-      fs.unlink(path, () => {
-
-        // classifying image
-        predictionClient.predict(data, (err, results) => {
-          if (err) return handleError(err);
-
-          debug('Image classification results:', results);
-          console.log(`I see ${results[0]}`)
-        });
-
-      });
-
-    });
   });
 }
 
