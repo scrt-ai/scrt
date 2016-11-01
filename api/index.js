@@ -8,10 +8,10 @@ if (!process.env.TENSORFLOW_SERVING_CONNECTION) {
   process.exit(1);
 }
 
+const predictionClient = require('tensorflow-serving-node-client')(process.env.TENSORFLOW_SERVING_CONNECTION);
 const http = require('http');
 const Busboy = require('busboy');
-const predictionClient = require('tensorflow-serving-node-client')(process.env.TENSORFLOW_SERVING_CONNECTION);
-const debug = require('debug')('scrt');
+const debug = require('debug')('scrt:api');
 
 const handleError = (err, res) => {
   res.statusCode = 500;
@@ -49,9 +49,9 @@ const server = http.createServer((req, res) => {
 
   var files = [];
 
-  var busboy = new Busboy({ headers: req.headers });  
+  var busboy = new Busboy({ headers: req.headers });
   busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    
+
     if (mimetype !== 'image/jpeg') {
       res.statusCode = 415;
       return file.resume();
@@ -67,7 +67,7 @@ const server = http.createServer((req, res) => {
 
   });
   busboy.on('finish', () => {
-    
+
     if (files.length === 0) {
       res.statusCode = 400;
       return res.end('No JPEGs were uploaded.');
@@ -80,7 +80,7 @@ const server = http.createServer((req, res) => {
 
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(results));
-    });    
+    });
   });
 
   return req.pipe(busboy);

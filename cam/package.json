@@ -1,16 +1,22 @@
 {
-  "name": "api",
+  "name": "cam",
   "version": "0.0.1",
-  "description": "HTTP API for Tensorflow Serving",
+  "description": "Camera shots classificator using TensorFlow Serving service.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "camera",
+    "shot",
+    "recognition",
+    "image"
+  ],
   "author": "Alexey Melnikov",
   "license": "MIT",
   "dependencies": {
-    "busboy": "^0.2.13",
+    "chokidar": "^1.6.1",
     "debug": "^2.2.0",
     "tensorflow-serving-node-client": "0.0.1"
   }
