@@ -37,14 +37,21 @@ function main() {
 
     // reading file
     fs.readFile(path, (err, data) => {
+      if (err) return handleError(err);
 
-      // classifying image
-      predictionClient.predict(data, (err, results) => {
-        if (err) return handleError(err);
+      // deleting file
+      fs.unlink(path, () => {
 
-        debug('Image classification results:', results);
-        console.log(`I see ${results[0]}`)
+        // classifying image
+        predictionClient.predict(data, (err, results) => {
+          if (err) return handleError(err);
+
+          debug('Image classification results:', results);
+          console.log(`I see ${results[0]}`)
+        });
+
       });
+
     });
   });
 }
