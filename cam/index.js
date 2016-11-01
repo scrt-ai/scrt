@@ -48,7 +48,7 @@ function main() {
       predictionClient.predict(buffer, (err, results) => {
         if (err) return handleError(err);
 
-        debug('Results of image inference:', results);
+        debug('What I see:', results[0]);
       });
     });
   });
