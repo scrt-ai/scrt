@@ -36,16 +36,10 @@ function main() {
     debug(`New JPEG file: ${path}`);
 
     // reading file
-    const stream = fs.createReadStream(path);
-    const buffers = [];
-    stream.on('data', (data) => {
-      buffers.push(data);
-    });
-    stream.on('end', () => {
-      const buffer = Buffer.concat(buffers);
+    fs.readFile(path, (err, data) => {
 
       // classifying image
-      predictionClient.predict(buffer, (err, results) => {
+      predictionClient.predict(data, (err, results) => {
         if (err) return handleError(err);
 
         debug('Image classification results:', results);
