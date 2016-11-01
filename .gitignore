@@ -40,4 +40,4 @@ jspm_packages
 .DS_Store
 
 # captured images
-cam/capture
+cam/capture/*.jpg

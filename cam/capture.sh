@@ -1,1 +1,1 @@
-fswebcam -c fswebcam.conf --exec rename.sh
+fswebcam -c fswebcam.conf

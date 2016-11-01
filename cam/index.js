@@ -28,12 +28,12 @@ function main() {
     ignoreInitial: true
   });
 
-  watcher.on('add', path => {
+  watcher.on('change', path => {
     if (!path.endsWith('.jpg')) {
       return;
     }
 
-    debug(`New JPEG file: ${path}`);
+    debug(`New image captured: ${path}`);
 
     // reading file
     const stream = fs.createReadStream(path);
