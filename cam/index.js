@@ -48,7 +48,8 @@ function main() {
       predictionClient.predict(buffer, (err, results) => {
         if (err) return handleError(err);
 
-        debug('What I see:', results[0]);
+        debug('Image classification results:', results);
+        console.log(`I see ${results[0]}`)
       });
     });
   });
