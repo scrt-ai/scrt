@@ -18,6 +18,7 @@
   "dependencies": {
     "chokidar": "^1.6.1",
     "debug": "^2.2.0",
+    "request": "^2.76.0",
     "tensorflow-serving-node-client": "0.0.1"
   }
 }

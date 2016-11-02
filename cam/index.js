@@ -8,10 +8,14 @@ if (!process.env.TENSORFLOW_SERVING_CONNECTION) {
   process.exit(1);
 }
 
+// env
+
+
 const predictionClient = require('tensorflow-serving-node-client')(process.env.TENSORFLOW_SERVING_CONNECTION);
 const debug = require('debug')('scrt:watcher');
 const chokidar = require('chokidar');
 const fs = require('fs');
+const request = require('request');
 
 const WATCH_PATH = './capture';
 
@@ -34,12 +38,31 @@ function processImage(path, fn) {
         if (err) return fn(err);
 
         debug('Image classification results:', results);
-        fn(null, results[0][0]);
+        fn(null, results[0]);
       });
 
     });
 
   });
+}
+
+function postResults(data, fn) {
+  if (!process.env.POST_SERVER) {
+    return fn();
+  }
+
+  const opts = {
+    method: 'POST',
+    uri: process.env.POST_SERVER,
+    multipart: [
+      {
+        'content-type': 'application/json',
+        body: JSON.stringify({tags: data})
+      }
+    ]
+  };
+
+  request(opts, fn);
 }
 
 function main() {
@@ -63,7 +86,13 @@ function main() {
       processImage(path, (err, res) => {
         if (err) return handleError(err);
 
-        console.log(`I see: ${res}`);
+        // posting results
+        postResults(res, (err) => {
+          if (err) return handleError(err);
+
+          console.log(`I see: ${res[0]}`);
+        });
+
       });
     }, 100);
 

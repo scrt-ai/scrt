@@ -25,7 +25,7 @@ Post JPEG image to localhost:8080
 ### Camera real-time recognition:
 Installing using docker:
 ```
-$ docker run -d --name=inception_cam -e TENSORFLOW_SERVING_CONNECTION=192.168.99.100:9000 --device=/dev/video0:/dev/video0 scrtai/cam
+$ docker run -d --name=inception_cam -e TENSORFLOW_SERVING_CONNECTION=192.168.99.100:9000 -e POST_SERVER=http://scrt.credo.ru/notify.php --device=/dev/video0:/dev/video0 scrtai/cam
 ```
 
 Check container logs:
