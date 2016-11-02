@@ -5,6 +5,10 @@ AI for security.
 ## How to run
 First you need to install docker on your machine: [https://docs.docker.com/engine/installation/linux/ubuntulinux/](https://docs.docker.com/engine/installation/linux/ubuntulinux/)
 
+To remove local docker image, e.g. scrtai/cam, type:
+```
+$ docker rmi scrtai/cam
+```
 
 ### TensorFlow Serving server
 Installing using docker:
@@ -25,7 +29,7 @@ Post JPEG image to localhost:8080
 ### Camera real-time recognition:
 Installing using docker:
 ```
-$ docker run -d --name=inception_cam --link=inception:tf -e POST_SERVER=http://scrt.credo.ru/notify.php --device=/dev/video0:/dev/video0 scrtai/cam
+$ docker run -d --name=inception_cam --link=inception:tf -e POST_SERVER=http://scrt.credo.ru/notify.php -e DEBUG=scrt* --device=/dev/video0:/dev/video0 scrtai/cam
 ```
 
 Check container logs:
