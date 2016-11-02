@@ -50,16 +50,12 @@ function postResults(data, fn) {
   if (!process.env.POST_SERVER) {
     return fn();
   }
-
   const opts = {
+    url: process.env.POST_SERVER,
     method: 'POST',
-    uri: process.env.POST_SERVER,
-    multipart: [
-      {
-        'content-type': 'application/json',
-        body: JSON.stringify({tags: data})
-      }
-    ]
+    json: {
+      "tags": data
+    }
   };
 
   request(opts, fn);
@@ -98,5 +94,6 @@ function main() {
 
   });
 }
+
 
 main();
