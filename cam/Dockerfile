@@ -11,4 +11,8 @@ RUN mkdir capture
 # CMD
 CMD ["sh", "-c", "fswebcam -c fswebcam.conf ; npm start"]
 
+# prepare env vars and run nodejs
+RUN chmod +x ./docker-entrypoint.sh
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
 EXPOSE 8080

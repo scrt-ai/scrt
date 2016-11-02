@@ -16,7 +16,7 @@ $ docker run -d --name=inception -p 9000:9000 scrtai/inception /bin/bash -c "/se
 ### HTTP API:
 Installing using docker:
 ```
-$ docker run -d --name=inception_api -p 8080:8080 -e TENSORFLOW_SERVING_CONNECTION=192.168.99.100:9000 -e DEBUG=scrt* scrtai/api
+$ docker run -d --name=inception_api -p 8080:8080 --link=inception:tf -e DEBUG=scrt* scrtai/api
 ```
 
 Post JPEG image to localhost:8080
@@ -25,7 +25,7 @@ Post JPEG image to localhost:8080
 ### Camera real-time recognition:
 Installing using docker:
 ```
-$ docker run -d --name=inception_cam -e TENSORFLOW_SERVING_CONNECTION=192.168.99.100:9000 -e POST_SERVER=http://scrt.credo.ru/notify.php --device=/dev/video0:/dev/video0 scrtai/cam
+$ docker run -d --name=inception_cam --link=inception:tf -e POST_SERVER=http://scrt.credo.ru/notify.php --device=/dev/video0:/dev/video0 scrtai/cam
 ```
 
 Check container logs:

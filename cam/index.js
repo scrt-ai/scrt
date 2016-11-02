@@ -8,8 +8,6 @@ if (!process.env.TENSORFLOW_SERVING_CONNECTION) {
   process.exit(1);
 }
 
-// env
-
 
 const predictionClient = require('tensorflow-serving-node-client')(process.env.TENSORFLOW_SERVING_CONNECTION);
 const debug = require('debug')('scrt:watcher');

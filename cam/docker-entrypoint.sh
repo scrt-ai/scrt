@@ -6,5 +6,4 @@ if [ -n "$TF_PORT_9000_TCP_ADDR" ] && [ -n "$TF_PORT_9000_TCP_PORT" ]; then
 fi
 echo "TENSORFLOW SERVING: ${TENSORFLOW_SERVING_CONNECTION}"
 
-# execute nodejs application
-exec npm start
+exec "$@"
