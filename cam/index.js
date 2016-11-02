@@ -65,7 +65,7 @@ function main() {
 
         console.log(`I see: ${res}`);
       });
-    }, 300);
+    }, 100);
 
   });
 }
